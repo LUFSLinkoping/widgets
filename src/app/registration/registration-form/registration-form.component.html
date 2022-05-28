@@ -1,0 +1,87 @@
+<mat-stepper linear>
+   
+    <mat-step [stepControl]="personalInformation">
+        <ng-template matStepLabel>Personuppgifter</ng-template>
+        <div class="step-info">
+            Att bli medlem i LUFS stöttar föreningen inte bara ekonomiskt, utan även i diskussioner med kommunen kring exempelvis nya discgolfbanor. Du visar dessutom de aktiva i föreningen att du uppskattar deras arbete!
+        </div>
+        <form [formGroup]="personalInformation">
+            <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Förnamn</mat-label>
+                <input matInput formControlName="firstName" required>
+            </mat-form-field>
+            <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Efternamn</mat-label>
+                <input matInput formControlName="lastName" required>
+            </mat-form-field>
+            <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Personnummer</mat-label>
+                <input matInput formControlName="personalNumber" required>
+                <mat-hint align="start">Personnummer krävs för registrering i i IdrottOnline.</mat-hint>
+            </mat-form-field>
+        </form>
+        <div class="buttons">
+            <button mat-button matStepperNext>Nästa</button>
+        </div>
+    </mat-step>
+    <mat-step [stepControl]="contactInformation">
+        <ng-template matStepLabel>Kontaktuppgifter</ng-template>
+        <div class="step-info">
+            Fakturering och klubbinformation kommer i första hand att komma till din e-postadress.
+        </div>
+        <form [formGroup]="contactInformation">
+            <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Telefonnummer</mat-label>
+                <input matInput formControlName="phoneNumber">
+            </mat-form-field>
+            <mat-form-field class="w-100" appearance="outline">
+                <mat-label>E-postadress</mat-label>
+                <input matInput formControlName="emailAdress">
+            </mat-form-field>
+            <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Postadress</mat-label>
+                <input matInput formControlName="postAdress">
+            </mat-form-field>
+            <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Postkod</mat-label>
+                <input matInput formControlName="zipCode">
+            </mat-form-field>
+            <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Ort</mat-label>
+                <input matInput formControlName="city">
+            </mat-form-field>
+        </form>
+        <div class="buttons">
+            <button mat-button matStepperBack>Föregående</button>
+            <button mat-button matStepperNext>Nästa</button>
+        </div>
+    </mat-step>
+    <mat-step [stepControl]="checkboxes">
+        <ng-template matStepLabel>Granska</ng-template>
+
+        <div class="overview-table">
+            <div>
+                <h4>Personuppgifter</h4>
+                <div>Namn: </div><div>{{personalInformation.value.firstName}} {{personalInformation.value.lastName}}</div>
+                <div>Personnummer: </div><div>{{personalInformation.value.personalNumber}}</div>
+            </div>
+            <div>
+                <h4>Kontaktuppgifter</h4>
+                <div>E-postadress: </div><div>{{contactInformation.value.emailAdress}}</div>
+                <div>Telefonnummer: </div><div>{{contactInformation.value.phoneNumber}}</div>
+                <div>Postadress: </div><div>{{contactInformation.value.postAdress}}<br>{{contactInformation.value.zipCode}} {{contactInformation.value.city}}</div>
+            </div>
+        </div>
+
+        <form [formGroup]="checkboxes">
+            <mat-checkbox formControlName="newsletter">Jag vill ha nyhetsbrev!</mat-checkbox>
+            <div class="checkbox-hint">Dessa är utöver obligatoriska informationsutskick.</div>
+            <a href="https://lufs.se/integritetspolicy">Visa integritetspolicy</a>
+            <mat-checkbox formControlName="acceptIntegrityPolicy">Jag har tagit del av och förstått LUFS integritetspolicy. Genom att ansöka om medlemskap till LUFS samtycker jag till att Linköping discgolf sparar och hanterar mina personuppgifter.</mat-checkbox>
+        </form>
+        <div class="buttons">
+            <button mat-flat-button color="primary" type="button" (click)="onSubmit()">Skicka</button>
+        </div>
+    </mat-step>
+    
+</mat-stepper>
