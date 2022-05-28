@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { MemberRegisterDto } from '../interfaces/member.interface';
+import { RegistrationService } from '../registration.service';
 
 @Component({
   selector: 'app-registration-form',
@@ -26,18 +29,31 @@ export class RegistrationFormComponent implements OnInit {
   });
     
 
-  constructor(private fb: FormBuilder) { }
+  sending = false;
+
+  constructor(
+    private fb: FormBuilder,
+    private registrationService: RegistrationService,
+    private router: Router
+    ) { }
 
   ngOnInit(): void {
   }
 
 
   onSubmit() {
-    const form = {
-      personalInformation: this.personalInformation.value,
-      contactInformation: this.contactInformation.value,
-      checkboxes: this.checkboxes.value,
-    };
-    console.dir(form);
+    this.sending = true;
+    const member: MemberRegisterDto = {
+      ...this.personalInformation.value,
+      ...this.contactInformation.value,
+      ...this.checkboxes.value,
+    }
+    this.registrationService.register(member).subscribe(x => {
+      this.sending = false;
+      if(x) {
+        this.router.navigate(["registration", "complete"]);
+      }
+      console.log(x);
+    })
   }
 }
