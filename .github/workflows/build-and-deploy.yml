@@ -57,6 +57,6 @@ jobs:
           username: ${{ secrets.DO_USER }}
           key: ${{ secrets.DO_SSHKEY }}
           port: ${{ secrets.DO_PORT }}
-          source: 'widgets/*'
+          source: '*'
           target: ${{ secrets.TARGET }}
-  
+          strip_components: 1 
